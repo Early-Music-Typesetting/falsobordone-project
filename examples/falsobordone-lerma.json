@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schemas/falsobordone.schema.json",
+  "file": "LermaCodex_f29v-30_Octavus_3.mei",
+  "layout": "choirbook",
+  "collection": "Fabordones Para Las Chirimias",
+  "titleInDocument": "Octovo tono",
+  "voices": [
+    {
+      "id": "cantus",
+      "document": "#LermaCodex",
+      "nameInDocument": "",
+      "folio": "v29",
+      "link": "https://www.diamm.ac.uk/sources/1047/#/images?p=29v"
+    }
+  ],
+  "analysis": {
+    "tonus": "#VIIIa",
+    "cf": {
+      "voice": "cantus",
+      "tonus": "#VIIIa",
+      "recit_pitch": "C",
+      "final_pitch": "G",
+      "intonatio": false
+    },
+    "bass": {
+      "recit_pitch": "A",
+      "final_pitch": "C",
+      "intonatio": true
+    }
+  }
+}
