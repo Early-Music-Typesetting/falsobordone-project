@@ -5,56 +5,172 @@
   "description": "Record of a falsobordone in music document.",
   "$comment": "Move some defs to $def?",
   "readOnly": true,
+  "title": "Record – falsobordone.",
   "definitions": {
     "Document": {
+      "title": "Document",
+      "description": "Document or artifact containing the described falsobordone.",
       "type": "object",
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "shelfbook": { "type": "string" },
-        "category": { "enum": ["manuscript", "print"] },
-        "links": { "type": "array", "items": { "type": "string" } }
+        "id": {
+          "title": "Reference ID",
+          "description": "Name by which this document is referenced within the database.",
+          "examples": ["#LermaCodex"],
+          "type": "string",
+          "pattern": "#.+"
+        },
+        "name": {
+          "title": "Name",
+          "description": "'Friendly' name by which the source is often referred to",
+          "examples": ["Lerma Codex"],
+          "type": "string"
+        },
+        "shelfbook": {
+          "$comment": "TO DO: more professional description!",
+          "title": "Shelfbook record",
+          "description": "Library reference number",
+          "examples": ["NL-Uu Hs.3 L16"],
+          "type": "string"
+        },
+        "medium": {
+          "title": "Medium",
+          "description": "By what means the document was produced.",
+          "enum": [
+            "manuscript",
+            "print of one type",
+            "print of another type",
+            "etc",
+            "oral"
+          ]
+        },
+        "category": {
+          "title": "Category",
+          "description": "What kind of document it is.",
+          "enum": ["choirbook", "partbook", "other", "transcription"]
+        },
+        "links": {
+          "title": "Links",
+          "description": "Links containings data related to the source.",
+          "item": { "$ref": "#/definitions/Link" }
+        }
       },
-      "required": ["id", "name", "shelfbook", "links"]
+      "required": ["id", "name", "shelfbook", "medium", "category", "links"]
     },
     "Psalmtone": {
       "type": "object",
-      "tonus": { "enum": ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "Peregrinus", "Other"] },
+      "properties": {
+        "tonusID": {
+          "title": "Tonus",
+          "description": "Number of tonus (as a Latin number or label).",
+          "examples": ["VIII"],
+          "enum": [
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "VI",
+            "VII",
+            "VIII",
+            "Peregrinus",
+            "Other"
+          ]
+        },
+        "variantID": {
+          "title": "Tonus termination variant",
+          "description": "Reference to termination variant of the psalmtone.",
+          "examples": ["a", "g2"],
+          "type": "string"
+        },
+        "tonusInDocument": {
+          "title": "Tonus in document",
+          "description": "How the tonus is described in the document. Note: may contain TEI.",
+          "examples": ["Octav<sic>o</sic>s"],
+          "type": "string"
+        }
+      },
       "required": ["type", "tonus"]
     },
     "Falsobordone": {
+      "title": "Falsobordone",
+      "description": "A record containing information about falsobordone.",
       "type": "object",
       "properties": {
         "file": {
           "$comment": "TO DO: URI",
+          "title": "File name",
+          "description": "MEI file containing falsobordone",
+          "type": "string",
+          "format": "URI"
+        },
+        "titleInDocument": {
+          "title": "Title (as in document)",
+          "description": "How the music is entitled in the source.",
+          "examples": ["Fabordon para las chirimias"],
           "type": "string"
         },
-        "titleInDocument": { "type": "string" },
-        "layout": { "enum": ["choirbook", "partitura", "partbooks"] },
-        "voices": { "type": "array", "items": { "$ref": "#/definitions/Voice" } },
+        "layout": {
+          "title": "Part layout",
+          "description": "How are the composition's parts (voices) layed out in the source.",
+          "enum": ["choirbook", "partitura", "partbooks"]
+        },
+        "parts": {
+          "title": "Parts",
+          "description": "Parts (voices) of the compositions",
+          "examples": ["Cantus"],
+          "type": "array",
+          "items": { "$ref": "#/definitions/Part" }
+        },
         "analysis": {
+          "title": "Analysis",
+          "description": "Data derived from the transcribed source (but not necessarily contained in (or directly derivable from) the MEI file, from which they cannot be trivially derived. Per hemistich.",
           "type": "object",
           "properties": {
             "tonus": {
+              "title": "Tonus",
               "description": "Reference to a tonus definition.",
               "type": "string",
               "pattern": "#.+"
             },
             "cf": {
+              "$comment": "TO DO: analyze hemistichs",
+              "title": "Cantus Firmus",
+              "description": "How is cantus firmus treated in the composition",
               "type": "object",
               "properties": {
-                "voice": { "$ref": "#/definitions/VoiceID" },
-                "recit_pitch": { "$ref": "#/definitions/RecitPitch" },
-                "final_pitch": { "$ref": "#/definitions/PitchID" },
-                "intonatio": { "type": "boolean" }
+                "part": {
+                  "title": "Part label (standardized)",
+                  "description": "Which part is it (note: the original voice labeling should be provided within the MEI file.",
+                  "$ref": "#/definitions/PartID"
+                },
+                "tenor_pitches": {
+                  "title": "Recit pitches (tenor)",
+                  "description": "The written pitch(es) corresponding to cantus firmus's tenor (reciting) pitch. Usually it's only one pitch.",
+                  "examples": ["C", "C"],
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/RecitPitch" }
+                },
+                "final_pitch": {
+                  "title": "Final pitch (terminatio)",
+                  "description": "The written pitch corresponding to cantus firmus's last note of terminatio",
+                  "examples": ["G"],
+                  "$ref": "#/definitions/PitchID"
+                },
+                "intonatio": {
+                  "title": "Intonation presence",
+                  "description": "Is intonatio present in the cf arrangement?",
+                  "type": "boolean"
+                }
               },
-              "required": ["voice", "tonus", "recit_pitch", "final_pitch", "intonatio"]
+              "required": ["part", "tenor_pitches", "final_pitch", "intonatio"]
             },
             "bass": {
+              "$comment": "TO DO: if CF is a real bass, in 'cf' set only 'voice' without setting the rest. Or refer it to 'bass'...?",
+              "title": "Bass (real)",
               "description": "Structural bass notes.",
               "type": "object",
               "properties": {
-                "recit_pitch": { "$ref": "#/definitions/RecitPitch" },
+                "tenor_pitches": { "$ref": "#/definitions/RecitPitch" },
                 "final_pitch": { "$ref": "#/definitions/PitchID" },
                 "intonatio": { "type": "boolean" }
               },
@@ -64,33 +180,107 @@
           "required": ["tonus", "cf", "bass"]
         }
       },
-      "required": ["file", "titleInDocument", "layout", "voices", "analysis"]
+      "required": ["file", "titleInDocument", "layout", "parts", "analysis"]
     },
-    "Voice": {
+    "Part": {
+      "title": "Part (or voice)",
+      "description": "A description of a single part of a composition.",
       "type": "object",
       "properties": {
-        "id": { "$ref": "#/definitions/VoiceID" },
+        "id": { "$ref": "#/definitions/PartID" },
         "document": {
+          "title": "Document",
           "description": "Reference to a document definition.",
+          "example": "#LermaCodex (if exists)",
           "type": "string",
           "pattern": "#.+"
         },
-        "nameInDocument": { "type": "string" },
+        "nameInDocument": {
+          "title": "Part name (in document)",
+          "description": "How part is named within the document. Can contain TEI.",
+          "examples": ["Teno<>r</>"],
+          "type": "string"
+        },
         "folio": {
+          "title": "Folio",
+          "description": "On which folio(s) the part is written.",
+          "example": ["41-42v, 42, 51v-52"],
           "type": "string",
           "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
         },
-        "link": { "type": "string" }
+        "staff": {
+          "title": "Staff number annotation",
+          "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position.",
+          "example": [4],
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "staffAnnotation": {
+          "title": "Staff position comment",
+          "description": "If the part is located on a staff in such a way that providing an exact staff number is problematic, provide a comment.",
+          "examples": [
+            "An additional handwritten staff between 3rd and 4th staff on the print's page. [staff: 3]",
+            "An additional handwritten staff on the page margin. [staff: 3]"
+          ],
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/Link",
+          "title": "Links",
+          "description": "Links containings data related to the source.",
+          "item": {
+            "$comment": "TO DO: make this schema 'extend' Link schema such that it has compulsory type 'image', 'IFFF' or 'audio' (?) for linkType property.",
+            "$ref": "#/definitions/Link"
+          }
+        }
       },
-      "required": ["id", "document", "nameInDocument", "folio", "link"]
+      "required": [
+        "id",
+        "document",
+        "nameInDocument",
+        "folio",
+        "staff",
+        "links"
+      ]
     },
 
-    "VoiceID": { "enum": ["cantus", "altus", "tenor", "bassus"] },
+    "PartID": {
+      "title": "Standard part name",
+      "description": "A typical name of this part.",
+      "$comment": "TO DO: use some more formal convention.",
+      "enum": ["cantus", "altus", "tenor", "bassus"]
+    },
 
-    "PitchID": { "enum": ["C", "D", "E", "F", "G", "A", "B", "Bb"] },
+    "PitchID": {
+      "title": "Pitch ID",
+      "description": "A letter name of a pitch.",
+      "examples": ["A", "Bb", "F#"],
+      "type": "string",
+      "pattern": "[A-G](b*|#*)"
+    },
     "RecitPitch": {
-      "description": "Written pitch of the reciting tone.",
-      "$ref": "#/definitions/PitchID"
+      "$ref": "#/definitions/PitchID",
+      "title": "Reciting tone",
+      "description": "Written pitch of the reciting tone."
+    },
+
+    "Link": {
+      "title": "Link",
+      "description": "A link to the source.",
+      "type": "object",
+      "properties": {
+        "linkType": {
+          "title": "Type",
+          "description": "Type of the linked source.",
+          "enum": ["catalogue", "reference", "image", "IFFF", "audio"]
+        },
+        "href": {
+          "title": "Link",
+          "description": "Link.",
+          "type": "string",
+          "format": "url"
+        }
+      }
     }
   }
 }
