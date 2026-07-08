@@ -43,10 +43,10 @@
             "oral"
           ]
         },
-        "category": {
-          "title": "Category",
-          "description": "What kind of document it is.",
-          "enum": ["choirbook", "partbook", "other", "transcription"]
+        "prevalentPartLayout": {
+          "$ref": "#/definitions/PartLayout",
+          "title": "Part Layout (prevalent)",
+          "description": "How voices are (most of the time) organized in this source."
         },
         "links": {
           "title": "Links",
@@ -55,6 +55,38 @@
         }
       },
       "required": ["id", "name", "shelfbook", "medium", "category", "links"]
+    },
+    "PartLayout": {
+      "title": "Part Layout",
+      "description": "How voices are organized in the source.",
+      "$comment": "TO DO: maybe borrow from MEI's @notationtype..? or something similar.",
+      "anyOf": [
+        {
+          "title": "Choirbook",
+          "description": "Source has parts (voices) written separately onto distinctive page regions.",
+          "const": "choirbook"
+        },
+        {
+          "title": "Partbook",
+          "description": "Each voice is contained in a separate book (or e.g. a set of cuttlery items).",
+          "const": "partbook"
+        },
+        {
+          "title": "Modern score",
+          "description": "A modern score (has barlines and voices are vertically aligned).",
+          "const": "modern score"
+        },
+        {
+          "title": "Partitura",
+          "description": "Voices are aligned one under another (often without strict vertical alignment).",
+          "const": "partitura"
+        },
+        {
+          "title": "Other",
+          "description": "Arrangement of voices is unorthodox (please describe it). Note: only use this option if really necessary.",
+          "type": "string"
+        }
+      ]
     },
     "Tonus": {
       "title": "Tonus",
@@ -113,9 +145,9 @@
           "type": "string"
         },
         "layout": {
+          "$ref": "#/definitions/PartLayout",
           "title": "Part layout",
-          "description": "How are the composition's parts (voices) layed out in the source.",
-          "enum": ["choirbook", "partitura", "partbooks"]
+          "description": "How are the composition's parts (voices) layed out in the source."
         },
         "parts": {
           "title": "Parts",
