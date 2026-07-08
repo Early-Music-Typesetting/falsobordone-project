@@ -84,7 +84,8 @@
         "links": {
           "title": "Links",
           "description": "Links containings data related to the source.",
-          "item": { "$ref": "#/definitions/Link" }
+          "type": "array",
+          "items": { "$ref": "#/definitions/Link" }
         }
       },
       "required": ["id", "name", "shelfbook", "medium", "category", "links"]
@@ -339,7 +340,8 @@
           "$ref": "#/definitions/Link",
           "title": "Links",
           "description": "Links containings data related to the source.",
-          "item": {
+          "type": "array",
+          "items": {
             "$comment": "TO DO: make this schema 'extend' Link schema such that it has compulsory type 'image', 'IFFF' or 'audio' (?) for linkType property.",
             "$ref": "#/definitions/Link"
           }
