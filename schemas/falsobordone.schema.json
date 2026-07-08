@@ -24,9 +24,17 @@
           "examples": ["Lerma Codex"],
           "type": "string"
         },
-        "shelfbook": {
+        "archive": {
+          "title": "Archive",
+          "description": "Current archive the manuscript is in.",
+          "examples": [
+            "Universiteitsbibliotheek, Utrecht, Netherlands (NL-Uu)"
+          ],
+          "type": "string"
+        },
+        "shelfmark": {
           "$comment": "TO DO: more professional description!",
-          "title": "Shelfbook record",
+          "title": "Shelfmark record",
           "description": "Library reference number",
           "examples": ["NL-Uu Hs.3 L16"],
           "type": "string"
@@ -88,7 +96,15 @@
           "items": { "$ref": "#/definitions/Link" }
         }
       },
-      "required": ["id", "name", "shelfbook", "medium", "category", "links"]
+      "required": [
+        "id",
+        "name",
+        "archive",
+        "shelfbook",
+        "medium",
+        "category",
+        "links"
+      ]
     },
     "PartLayout": {
       "title": "Part Layout",
