@@ -2,10 +2,9 @@
   "$id": "falsobordone",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/Falsobordone",
-  "description": "Record of a falsobordone in music document.",
   "$comment": "Move some defs to $def?",
   "readOnly": true,
-  "title": "Record – falsobordone.",
+  "title": "New record in Falsobordone Database.",
   "definitions": {
     "Document": {
       "title": "Document",
