@@ -231,7 +231,7 @@
         "nameInDocument": {
           "title": "Part name (in document)",
           "description": "How part is named within the document. Can contain TEI.",
-          "examples": ["Teno<>r</>"],
+          "examples": ["Tenoꝛ"],
           "type": "string"
         },
         "folio": {
