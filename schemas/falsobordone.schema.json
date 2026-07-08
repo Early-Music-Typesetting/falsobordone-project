@@ -150,12 +150,6 @@
           "description": "Reference to termination variant of the psalmtone.",
           "examples": ["a", "g2"],
           "type": "string"
-        },
-        "nameInDocument": {
-          "title": "Tonus Name in document",
-          "description": "How the tonus is described in the document. Note: may contain TEI.",
-          "examples": ["Octav<sic>o</sic>s"],
-          "type": "string"
         }
       },
       "required": ["tonusID", "variantID", "nameInDocument"]
@@ -311,6 +305,12 @@
           "title": "Part name (in document)",
           "description": "How part is named within the document. Can contain TEI.",
           "examples": ["Tenoꝛ"],
+          "type": "string"
+        },
+        "tonusInDocument": {
+          "title": "Tonus (as in document)",
+          "description": "How the tonus is described in the document. Note: may contain TEI.",
+          "examples": ["Octav<sic>o</sic>s"],
           "type": "string"
         },
         "folio": {
