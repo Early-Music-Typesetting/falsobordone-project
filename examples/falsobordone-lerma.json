@@ -3,7 +3,7 @@
   "file": "LermaCodex_f29v-30_Octavus_3.mei",
   "layout": "choirbook",
   "collection": "Fabordones Para Las Chirimias",
-  "titleInDocument": "Octovo tono",
+  "titleInDocument": "Septimo tono :~",
   "parts": [
     {
       "document": "#LermaCodex",
@@ -11,23 +11,61 @@
       "folio": "v29",
       "id": "cantus",
       "links": {},
-      "staff": 5
+      "staff": 4
     }
   ],
   "analysis": {
     "cantusFirmus": {
       "part": "cantus",
       "tonus": {
-        "tonusID": "VIII",
-        "variantID": "g",
+        "tonusID": "VII",
+        "variantID": "d",
         "nameInDocument": "Octav<sic>o</sic>s"
       }
     },
     "initHemistich": {
-      "tenor": "C"
+      "tenor": {
+        "tenor": {
+          "pitch": "G",
+          "composed-out": "simple"
+        },
+        "terminatio": {
+          "pitch": "G",
+          "composed-out": "simple"
+        }
+      },
+      "bass": {
+        "tenor": {
+          "pitch": "C",
+          "composed-out": "simple"
+        },
+        "terminatio": {
+          "pitch": "D",
+          "composed-out": "elaborated"
+        }
+      }
     },
     "finalHemistich": {
-      "tenor": "C"
+      "tenor": {
+        "tenor": {
+          "pitch": "G",
+          "composed-out": "nota contra notam"
+        },
+        "terminatio": {
+          "pitch": "G",
+          "composed-out": "nota contra notam"
+        }
+      },
+      "bass": {
+        "tenor": {
+          "pitch": "C",
+          "composed-out": "nota contra notam"
+        },
+        "terminatio": {
+          "pitch": "G",
+          "composed-out": "nota contra notam"
+        }
+      }
     }
   }
 }

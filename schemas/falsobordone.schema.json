@@ -156,12 +156,12 @@
         "initHemistich": {
           "title": "Initial Hemistich",
           "description": "Initial hemistich",
-          "$ref": "#/definitions/TonalContent"
+          "$ref": "#/definitions/TonalOutline"
         },
         "finalHemistich": {
           "title": "Concluding Hemistich",
           "description": "Concluding hemistich",
-          "$ref": "#/definitions/TonalContent"
+          "$ref": "#/definitions/TonalOutline"
         }
       },
       "required": ["cantusFirmus", "initHemistich", "finalHemistich"]
@@ -175,29 +175,42 @@
         "intonatio": {
           "title": "Intonatio",
           "description": "Very first written pitch of the part.",
-          "examples": ["G"],
-          "$ref": "#/definitions/PitchID"
+          "$ref": "#/definitions/HemistichSegment"
         },
         "tenor": {
           "title": "Recit pitch (tenor)",
           "description": "The written pitch corresponding to cantus firmus's tenor (reciting) pitch.",
           "examples": ["C"],
-          "$ref": "#/definitions/PitchID"
+          "$ref": "#/definitions/HemistichSegment"
         },
         "mediatio": {
           "title": "Mediatio",
           "description": "The pitch concluding mediation.",
           "examples": ["A"],
-          "$ref": "#/definitions/PitchID"
+          "$ref": "#/definitions/HemistichSegment"
         },
         "terminatio": {
           "title": "Final pitch (terminatio)",
-          "description": "The written pitch corresponding to cantus firmus's last note of terminatio",
-          "examples": ["G"],
-          "$ref": "#/definitions/PitchID"
+          "$ref": "#/definitions/HemistichSegment"
         }
       },
-      "required": ["tenor"]
+      "required": ["tenor", "terminatio"]
+    },
+
+    "HemistichSegment": {
+      "title": "Hemistich Segment",
+      "description": "Analysis of a segment within the hemistich.",
+      "$comment": "TO DO: rename other 'tonal' things to 'segment'...?",
+      "properties": {
+        "pitch": {
+          "$ref": "#/definitions/PitchID",
+          "description": "The written pitch (corresponding to cantus firmus note)"
+        },
+        "composed-out": {
+          "$ref": "#/definitions/ComposedOut"
+        }
+      },
+      "required": ["pitch", "composed-out"]
     },
 
     "TonalOutline": {
@@ -283,6 +296,12 @@
       "examples": ["A", "Bb", "F#"],
       "type": "string",
       "pattern": "[A-G](b*|#*)"
+    },
+
+    "ComposedOut": {
+      "title": "Composed-out",
+      "description": "To what degree the melody has been composed.",
+      "enum": ["nota contra notam", "simple", "elaborated"]
     },
 
     "Link": {
