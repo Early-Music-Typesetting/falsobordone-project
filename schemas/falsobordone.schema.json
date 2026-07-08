@@ -36,18 +36,18 @@
           "$comment": "TO DO: more professional description!",
           "title": "Shelfmark record",
           "description": "Library reference number",
-          "examples": ["NL-Uu Hs.3 L16"],
+          "examples": ["Hs.3 L16"],
           "type": "string"
         },
-        "medium": {
-          "title": "Source",
-          "description": "By what means the document was produced.",
+        "witness": {
+          "title": "Witness",
+          "description": "By what means the document is preserved.",
           "enum": [
             "manuscript",
             "print of one type",
             "print of another type",
             "etc",
-            "oral"
+            "performance"
           ],
           "anyOf": [
             {
