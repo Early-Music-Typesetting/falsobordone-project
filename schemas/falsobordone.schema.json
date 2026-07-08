@@ -56,12 +56,15 @@
       },
       "required": ["id", "name", "shelfbook", "medium", "category", "links"]
     },
-    "Psalmtone": {
+    "Tonus": {
+      "title": "Tonus",
+      "description": "Information about the tonus.",
       "type": "object",
       "properties": {
         "tonusID": {
-          "title": "Tonus",
+          "title": "Tonus ID",
           "description": "Number of tonus (as a Latin number or label).",
+          "$comment": "TO DO: move it to another database",
           "examples": ["VIII"],
           "enum": [
             "I",
@@ -82,14 +85,14 @@
           "examples": ["a", "g2"],
           "type": "string"
         },
-        "tonusInDocument": {
-          "title": "Tonus in document",
+        "nameInDocument": {
+          "title": "Tonus Name in document",
           "description": "How the tonus is described in the document. Note: may contain TEI.",
           "examples": ["Octav<sic>o</sic>s"],
           "type": "string"
         }
       },
-      "required": ["type", "tonus"]
+      "required": ["tonusID", "variantID", "nameInDocument"]
     },
     "Falsobordone": {
       "title": "Falsobordone",
@@ -119,69 +122,99 @@
           "description": "Parts (voices) of the compositions",
           "examples": ["Cantus"],
           "type": "array",
-          "items": { "$ref": "#/definitions/Part" }
+          "items": { "$ref": "#/definitions/Part", "minItems": 1 }
         },
         "analysis": {
-          "title": "Analysis",
-          "description": "Data derived from the transcribed source (but not necessarily contained in (or directly derivable from) the MEI file, from which they cannot be trivially derived. Per hemistich.",
-          "type": "object",
-          "properties": {
-            "tonus": {
-              "title": "Tonus",
-              "description": "Reference to a tonus definition.",
-              "type": "string",
-              "pattern": "#.+"
-            },
-            "cf": {
-              "$comment": "TO DO: analyze hemistichs",
-              "title": "Cantus Firmus",
-              "description": "How is cantus firmus treated in the composition",
-              "type": "object",
-              "properties": {
-                "part": {
-                  "title": "Part label (standardized)",
-                  "description": "Which part is it (note: the original voice labeling should be provided within the MEI file.",
-                  "$ref": "#/definitions/PartID"
-                },
-                "tenor_pitches": {
-                  "title": "Recit pitches (tenor)",
-                  "description": "The written pitch(es) corresponding to cantus firmus's tenor (reciting) pitch. Usually it's only one pitch.",
-                  "examples": ["C", "C"],
-                  "type": "array",
-                  "items": { "$ref": "#/definitions/RecitPitch" }
-                },
-                "final_pitch": {
-                  "title": "Final pitch (terminatio)",
-                  "description": "The written pitch corresponding to cantus firmus's last note of terminatio",
-                  "examples": ["G"],
-                  "$ref": "#/definitions/PitchID"
-                },
-                "intonatio": {
-                  "title": "Intonation presence",
-                  "description": "Is intonatio present in the cf arrangement?",
-                  "type": "boolean"
-                }
-              },
-              "required": ["part", "tenor_pitches", "final_pitch", "intonatio"]
-            },
-            "bass": {
-              "$comment": "TO DO: if CF is a real bass, in 'cf' set only 'voice' without setting the rest. Or refer it to 'bass'...?",
-              "title": "Bass (real)",
-              "description": "Structural bass notes.",
-              "type": "object",
-              "properties": {
-                "tenor_pitches": { "$ref": "#/definitions/RecitPitch" },
-                "final_pitch": { "$ref": "#/definitions/PitchID" },
-                "intonatio": { "type": "boolean" }
-              },
-              "required": ["recit_pitch", "final_pitch", "intonatio"]
-            }
-          },
-          "required": ["tonus", "cf", "bass"]
+          "$ref": "#/definitions/Analysis"
         }
       },
       "required": ["file", "titleInDocument", "layout", "parts", "analysis"]
     },
+    "Analysis": {
+      "title": "Analysis",
+      "description": "Data derived from the transcribed source (but not necessarily contained in (or directly derivable from) the MEI file, from which they cannot be trivially derived. Per hemistich.",
+      "type": "object",
+      "properties": {
+        "cantusFirmus": {
+          "$comment": "TO DO: analyze hemistichs",
+          "title": "Cantus Firmus",
+          "description": "How is cantus firmus treated in the composition",
+          "type": "object",
+          "properties": {
+            "part": {
+              "title": "Part label (standardized)",
+              "description": "Which part is it (note: the original voice labeling should be provided within the MEI file.",
+              "$ref": "#/definitions/PartID"
+            },
+            "tonus": {
+              "title": "Tonus",
+              "$ref": "#/definitions/Tonus"
+            }
+          },
+          "required": ["part", "tonus"]
+        },
+        "initHemistich": {
+          "title": "Initial Hemistich",
+          "description": "Initial hemistich",
+          "$ref": "#/definitions/TonalContent"
+        },
+        "finalHemistich": {
+          "title": "Concluding Hemistich",
+          "description": "Concluding hemistich",
+          "$ref": "#/definitions/TonalContent"
+        }
+      },
+      "required": ["cantusFirmus", "initHemistich", "finalHemistich"]
+    },
+
+    "TonalContent": {
+      "title": "Part (Voice) Tonal Content",
+      "description": "Information about the tonal content of a part (voice).",
+      "type": "object",
+      "properties": {
+        "intonatio": {
+          "title": "Intonatio",
+          "description": "Very first written pitch of the part.",
+          "examples": ["G"],
+          "$ref": "#/definitions/PitchID"
+        },
+        "tenor": {
+          "title": "Recit pitch (tenor)",
+          "description": "The written pitch corresponding to cantus firmus's tenor (reciting) pitch.",
+          "examples": ["C"],
+          "$ref": "#/definitions/PitchID"
+        },
+        "mediatio": {
+          "title": "Mediatio",
+          "description": "The pitch concluding mediation.",
+          "examples": ["A"],
+          "$ref": "#/definitions/PitchID"
+        },
+        "terminatio": {
+          "title": "Final pitch (terminatio)",
+          "description": "The written pitch corresponding to cantus firmus's last note of terminatio",
+          "examples": ["G"],
+          "$ref": "#/definitions/PitchID"
+        }
+      },
+      "required": ["tenor"]
+    },
+
+    "TonalOutline": {
+      "title": "Tonal Outline",
+      "description": "Information about the tonal outline of Falsobordone. Note: if cf is in bass, fill only \"tenor\".",
+      "type": "object",
+      "properties": {
+        "tenor": { "$ref": "#/definitions/TonalContent" },
+        "bass": {
+          "$ref": "#/definitions/TonalContent",
+          "title": "Bass (structural)",
+          "description": "Information about the lowest structural notes."
+        }
+      },
+      "required": ["tenor"]
+    },
+
     "Part": {
       "title": "Part (or voice)",
       "description": "A description of a single part of a composition.",
@@ -210,7 +243,7 @@
         },
         "staff": {
           "title": "Staff number annotation",
-          "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position.",
+          "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
           "example": [4],
           "type": "number",
           "exclusiveMinimum": 0
@@ -234,14 +267,7 @@
           }
         }
       },
-      "required": [
-        "id",
-        "document",
-        "nameInDocument",
-        "folio",
-        "staff",
-        "links"
-      ]
+      "required": ["id", "document", "folio", "staff", "links"]
     },
 
     "PartID": {
@@ -258,11 +284,6 @@
       "type": "string",
       "pattern": "[A-G](b*|#*)"
     },
-    "RecitPitch": {
-      "$ref": "#/definitions/PitchID",
-      "title": "Reciting tone",
-      "description": "Written pitch of the reciting tone."
-    },
 
     "Link": {
       "title": "Link",
@@ -272,13 +293,25 @@
         "linkType": {
           "title": "Type",
           "description": "Type of the linked source.",
-          "enum": ["catalogue", "reference", "image", "IFFF", "audio"]
+          "enum": [
+            "catalogue",
+            "reference",
+            "image",
+            "IFFF",
+            "audio",
+            "edition"
+          ]
         },
         "href": {
           "title": "Link",
           "description": "Link.",
           "type": "string",
           "format": "url"
+        },
+        "annotation": {
+          "title": "Annotations",
+          "description": "Any remarks about the content within the link.",
+          "type": "string"
         }
       }
     }
