@@ -127,7 +127,7 @@
           "title": "None",
           "description": "Voices are not written down.",
           "type": "string"
-        }
+        },
         {
           "title": "Other",
           "description": "Arrangement of voices is unorthodox (please describe it). Note: only use this option if really necessary.",
