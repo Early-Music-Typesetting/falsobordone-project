@@ -13,27 +13,26 @@
       "properties": {
         "id": {
           "title": "Reference ID",
-          "description": "Name by which this document is referenced within the database.",
+          "description": "Name by which this document will be referenced within this database.",
           "examples": ["#LermaCodex"],
           "type": "string",
           "pattern": "#.+"
         },
         "name": {
           "title": "Name",
-          "description": "'Friendly' name by which the source is often referred to",
+          "description": "A name by which the source is commonly referred to.",
           "examples": ["Lerma Codex"],
           "type": "string"
         },
         "archive": {
           "title": "Archive",
-          "description": "Current archive the manuscript is in.",
+          "description": "Current archive the manuscript is located at.",
           "examples": [
             "Universiteitsbibliotheek, Utrecht, Netherlands (NL-Uu)"
           ],
           "type": "string"
         },
         "shelfmark": {
-          "$comment": "TO DO: more professional description!",
           "title": "Shelfmark record",
           "description": "Library reference number",
           "examples": ["Hs.3 L16"],
@@ -41,18 +40,11 @@
         },
         "witness": {
           "title": "Witness",
-          "description": "By what means the document is preserved.",
-          "enum": [
-            "manuscript",
-            "print of one type",
-            "print of another type",
-            "etc",
-            "performance"
-          ],
+          "description": "Type of source in which the music survives.",
           "anyOf": [
             {
               "title": "Manuscript",
-              "description": "Hand written book.",
+              "description": "A handwritten document.",
               "const": "manuscript"
             },
             {
@@ -62,24 +54,24 @@
               "const": "print"
             },
             {
-              "title": "Copperplate porint",
+              "title": "Copperplate print",
               "description": "A print from handmade copperplate.",
               "const": "copperplate"
             },
             {
               "$comment": "TO DO: research and list!",
               "title": "Print (another type)",
-              "description": "SoMe TyPe Of EaRlY pRiNt",
-              "const": "pRiNt"
+              "description": "Some another print type (dummy value)",
+              "const": "another print"
             },
             {
-              "title": "Oral",
-              "description": "The artifact comes from oral transmission (could have been audio registered).",
-              "const": "oral"
+              "title": "Performance",
+              "description": "The text comes in a form of oral transmission (that could have been audio registered).",
+              "const": "perfomance"
             },
             {
               "title": "Other",
-              "description": "Describe the unusual document that the voices are contained in an unusual artifact (e.g. knifes :) ).",
+              "description": "An unusual document (e.g. a set of knifes :) ).",
               "type": "string"
             }
           ]
@@ -108,7 +100,7 @@
     },
     "PartLayout": {
       "title": "Part Layout",
-      "description": "How voices are organized in the source.",
+      "description": "How the voices are organized in the source.",
       "$comment": "TO DO: maybe borrow from MEI's @notationtype..? or something similar.",
       "anyOf": [
         {
@@ -131,6 +123,11 @@
           "description": "Voices are aligned one under another (often without strict vertical alignment).",
           "const": "partitura"
         },
+        {
+          "title": "None",
+          "description": "Voices are not written down.",
+          "type": "string"
+        }
         {
           "title": "Other",
           "description": "Arrangement of voices is unorthodox (please describe it). Note: only use this option if really necessary.",
