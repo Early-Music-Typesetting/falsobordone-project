@@ -33,7 +33,7 @@
           "type": "string"
         },
         "medium": {
-          "title": "Medium",
+          "title": "Source",
           "description": "By what means the document was produced.",
           "enum": [
             "manuscript",
@@ -41,6 +41,40 @@
             "print of another type",
             "etc",
             "oral"
+          ],
+          "anyOf": [
+            {
+              "title": "Manuscript",
+              "description": "Hand written book.",
+              "const": "manuscript"
+            },
+            {
+              "$comment": "TO DO: make less generic.",
+              "title": "Print",
+              "description": "An early print (select only if other more specific print categories are not suitable).",
+              "const": "print"
+            },
+            {
+              "title": "Copperplate porint",
+              "description": "A print from handmade copperplate.",
+              "const": "copperplate"
+            },
+            {
+              "$comment": "TO DO: research and list!",
+              "title": "Print (another type)",
+              "description": "SoMe TyPe Of EaRlY pRiNt",
+              "const": "pRiNt"
+            },
+            {
+              "title": "Oral",
+              "description": "The artifact comes from oral transmission (could have been audio registered).",
+              "const": "oral"
+            },
+            {
+              "title": "Other",
+              "description": "Describe the unusual document that the voices are contained in an unusual artifact (e.g. knifes :) ).",
+              "type": "string"
+            }
           ]
         },
         "prevalentPartLayout": {
