@@ -358,18 +358,21 @@
         "label": {
           "title": "Part (voice) label",
           "description": "The name of the part (voice)",
-          "partID": { "$ref": "#/definitions/PartID" },
-          "partNumber": {
-            "title": "Part Number.",
-            "description": "A part number (if any)",
-            "examples": [2],
-            "type": "number"
-          },
-          "partNameInDocument": {
-            "title": "Part name (in document)",
-            "description": "Part's name within the document. Can contain TEI. NOTE: Leave empty if part is not named.",
-            "examples": ["Tenoꝛ"],
-            "type": "string"
+          "type": "object",
+          "properties": {
+            "partID": { "$ref": "#/definitions/PartID" },
+            "partNumber": {
+              "title": "Part Number.",
+              "description": "A part number (if any)",
+              "examples": [2],
+              "type": "number"
+            },
+            "partNameInDocument": {
+              "title": "Part name (in document)",
+              "description": "Part's name within the document. Can contain TEI. NOTE: Leave empty if part is not named.",
+              "examples": ["Tenoꝛ"],
+              "type": "string"
+            }
           },
           "required": ["partID", "partNumber", "partNameInDocument"],
           "additionalProperties": false
