@@ -385,14 +385,18 @@
         "ambitus": {
           "title": "Ambitus",
           "description": "Lowest and highest note of the part.",
+          "type": "object",
           "properties": {
             "lowest": {
-              "$ref": "PitchOctaveID"
+              "$ref": "#/definitions/PitchOctaveID",
+              "title": "Lowest pitch"
             },
             "highest": {
-              "$ref": "PitchOctaveID"
+              "$ref": "#/definitions/PitchOctaveID",
+              "title": "Highest pitch"
             }
-          }
+          },
+          "required": ["lowest", "highest"]
         },
         "links": {
           "$ref": "#/definitions/Link",
