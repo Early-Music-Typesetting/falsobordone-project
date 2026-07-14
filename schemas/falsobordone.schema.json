@@ -319,6 +319,7 @@
         "location": {
           "title": "Part's location within a document",
           "description": "Where exactly the parts are located within a document.",
+          "type": "object",
           "document": {
             "title": "Document",
             "description": "Reference to a document definition.",
@@ -353,6 +354,8 @@
           "additionalProperties": false
         },
         "label": {
+          "title": "Part (voice) label",
+          "description": "The name of the part (voice)",
           "partID": { "$ref": "#/definitions/PartID" },
           "partNumber": {
             "title": "Part Number.",
@@ -415,7 +418,7 @@
 
     "PartID": {
       "title": "Part name (standardised)",
-      "description": "A typical name of this part.",
+      "description": "A conventional name of this part. (Note: if part name is not given in the source, use the closest but most common label (a.g. 'bass', not 'baricanor').",
       "$comment": "TO DO: use some more formal convention.",
       "enum": ["cantus", "altus", "tenor", "bassus", "quintus", "sextus", "vagans", "baricanor", "other"]
     },
