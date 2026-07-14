@@ -331,14 +331,14 @@
             "folio": {
               "title": "Folio",
               "description": "On which folio(s) this part is written.",
-              "example": ["41-42v, 42, 51v-52"],
+              "examples": ["41-42v, 42, 51v-52"],
               "type": "string",
               "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
             },
             "staff": {
               "title": "Staff number annotation",
               "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
-              "example": [4],
+              "examples": [4],
               "type": "number",
               "exclusiveMinimum": 0
             },
