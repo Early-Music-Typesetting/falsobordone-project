@@ -320,35 +320,37 @@
           "title": "Part's location within a document",
           "description": "Where exactly the parts are located within a document.",
           "type": "object",
-          "document": {
-            "title": "Document",
-            "description": "Reference to a document definition.",
-            "examples": ["#LermaCodex", "#ChoralisConstantini[tenor]"],
-            "type": "string",
-            "pattern": "#.+"
-          },
-          "folio": {
-            "title": "Folio",
-            "description": "On which folio(s) this part is written.",
-            "example": ["41-42v, 42, 51v-52"],
-            "type": "string",
-            "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
-          },
-          "staff": {
-            "title": "Staff number annotation",
-            "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
-            "example": [4],
-            "type": "number",
-            "exclusiveMinimum": 0
-          },
-          "staffAnnotation": {
-            "title": "Staff position comment",
-            "description": "If the part is located on a staff in such a way that providing an exact staff number is problematic, provide a comment.",
-            "examples": [
-              "An additional handwritten staff between 3rd and 4th staff on the print's page. [Note: 'staff' is 3]",
-              "An additional handwritten staff on the page margin. [Note: 'staff' is 3]"
-            ],
-            "type": "string"
+          "properties": {
+            "document": {
+              "title": "Document",
+              "description": "Reference to a document definition.",
+              "examples": ["#LermaCodex", "#ChoralisConstantini[tenor]"],
+              "type": "string",
+              "pattern": "#.+"
+            },
+            "folio": {
+              "title": "Folio",
+              "description": "On which folio(s) this part is written.",
+              "example": ["41-42v, 42, 51v-52"],
+              "type": "string",
+              "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
+            },
+            "staff": {
+              "title": "Staff number annotation",
+              "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
+              "example": [4],
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "staffAnnotation": {
+              "title": "Staff position comment",
+              "description": "If the part is located on a staff in such a way that providing an exact staff number is problematic, provide a comment.",
+              "examples": [
+                "An additional handwritten staff between 3rd and 4th staff on the print's page. [Note: 'staff' is 3]",
+                "An additional handwritten staff on the page margin. [Note: 'staff' is 3]"
+              ],
+              "type": "string"
+            }
           },
           "required": ["document", "folio", "staff", "staffAnnotation"],
           "additionalProperties": false
