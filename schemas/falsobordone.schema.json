@@ -93,9 +93,9 @@
         "id",
         "name",
         "archive",
-        "shelfbook",
-        "medium",
-        "category",
+        "shelfmark",
+        "witness",
+        "prevalentPartLayout",
         "links"
       ],
       "additionalProperties": false
@@ -479,7 +479,9 @@
           "description": "Any remarks about the content within the link.",
           "type": "string"
         }
-      }
+      },
+      "required": ["linkType", "href"],
+      "additionalProperties": false
     }
   }
 }
