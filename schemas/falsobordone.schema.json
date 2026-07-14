@@ -97,7 +97,8 @@
         "medium",
         "category",
         "links"
-      ]
+      ],
+      "additionalProperties": false
     },
     "PartLayout": {
       "title": "Part Layout",
@@ -131,7 +132,7 @@
         },
         {
           "title": "Other",
-          "description": "Arrangement of voices is unorthodox (please describe it). Note: only use this option if really necessary.",
+          "description": "Other arrangement of voices (please describe it). Note: only use this option if really necessary.",
           "type": "string"
         }
       ]
@@ -167,7 +168,8 @@
           "type": "string"
         }
       },
-      "required": ["tonusID", "variantID", "nameInDocument"]
+      "required": ["tonusID", "variantID", "nameInDocument"],
+      "additionalProperties": false
     },
     "Falsobordone": {
       "title": "Falsobordone",
@@ -203,7 +205,8 @@
           "$ref": "#/definitions/Analysis"
         }
       },
-      "required": ["file", "titleInDocument", "layout", "parts", "analysis"]
+      "required": ["file", "titleInDocument", "layout", "parts", "analysis"],
+      "additionalProperties": false
     },
     "Analysis": {
       "title": "Analysis",
@@ -226,7 +229,8 @@
               "$ref": "#/definitions/Tonus"
             }
           },
-          "required": ["part", "tonus"]
+          "required": ["part", "tonus"],
+          "additionalProperties": false
         },
         "initHemistich": {
           "title": "Initial Hemistich",
@@ -239,7 +243,8 @@
           "$ref": "#/definitions/TonalOutline"
         }
       },
-      "required": ["cantusFirmus", "initHemistich", "finalHemistich"]
+      "required": ["cantusFirmus", "initHemistich", "finalHemistich"],
+      "additionalProperties": false
     },
 
     "TonalContent": {
@@ -269,7 +274,8 @@
           "$ref": "#/definitions/HemistichSegment"
         }
       },
-      "required": ["tenor", "terminatio"]
+      "required": ["tenor", "terminatio"],
+      "additionalProperties": false
     },
 
     "HemistichSegment": {
@@ -285,7 +291,8 @@
           "$ref": "#/definitions/ComposedOut"
         }
       },
-      "required": ["pitch", "composed-out"]
+      "required": ["pitch", "composed-out"],
+      "additionalProperties": false
     },
 
     "TonalOutline": {
@@ -300,7 +307,8 @@
           "description": "Information about the lowest structural notes."
         }
       },
-      "required": ["tenor"]
+      "required": ["tenor"],
+      "additionalProperties": false
     },
 
     "Part": {
@@ -308,60 +316,88 @@
       "description": "A description of a single part of a composition.",
       "type": "object",
       "properties": {
-        "id": { "$ref": "#/definitions/PartID" },
-        "document": {
-          "title": "Document",
-          "description": "Reference to a document definition.",
-          "example": "#LermaCodex (if exists)",
-          "type": "string",
-          "pattern": "#.+"
+        "location": {
+          "title": "Part's location within a document",
+          "description": "Where exactly the parts are located within a document.",
+          "document": {
+            "title": "Document",
+            "description": "Reference to a document definition.",
+            "examples": ["#LermaCodex", "#ChoralisConstantini[tenor]"],
+            "type": "string",
+            "pattern": "#.+"
+          },
+          "folio": {
+            "title": "Folio",
+            "description": "On which folio(s) this part is written.",
+            "example": ["41-42v, 42, 51v-52"],
+            "type": "string",
+            "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
+          },
+          "staff": {
+            "title": "Staff number annotation",
+            "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
+            "example": [4],
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "staffAnnotation": {
+            "title": "Staff position comment",
+            "description": "If the part is located on a staff in such a way that providing an exact staff number is problematic, provide a comment.",
+            "examples": [
+              "An additional handwritten staff between 3rd and 4th staff on the print's page. [Note: 'staff' is 3]",
+              "An additional handwritten staff on the page margin. [Note: 'staff' is 3]"
+            ],
+            "type": "string"
+          },
+          "required": ["document", "folio", "staff", "staffAnnotation"],
+          "additionalProperties": false
         },
-        "nameInDocument": {
-          "title": "Part name (in document)",
-          "description": "How part is named within the document. Can contain TEI.",
-          "examples": ["Tenoꝛ"],
-          "type": "string"
+        "label": {
+          "partID": { "$ref": "#/definitions/PartID" },
+          "partNumber": {
+            "title": "Part Number.",
+            "description": "A part number (if any)",
+            "examples": [2],
+            "type": "number"
+          },
+          "partNameInDocument": {
+            "title": "Part name (in document)",
+            "description": "Part's name within the document. Can contain TEI. NOTE: Leave empty if part is not named.",
+            "examples": ["Tenoꝛ"],
+            "type": "string"
+          },
+          "required": ["partID", "partNumber", "partNameInDocument"],
+          "additionalProperties": false
         },
         "clefInDocument": {
           "title": "Clef",
-          "description": "Which clef is used.",
+          "description": "Clef used for the part.",
           "examples": ["C3", "F4", "G4", "D4"],
           "type": "string",
           "pattern": "[A-Z]\\d"
         },
         "tonusInDocument": {
           "title": "Tonus (as in document)",
-          "description": "How the tonus is described in the document. Note: may contain TEI.",
+          "description": "Tonus label within the document. Note: may contain TEI.",
           "examples": ["Octav<sic>o</sic>s"],
           "type": "string"
         },
-        "folio": {
-          "title": "Folio",
-          "description": "On which folio(s) the part is written.",
-          "example": ["41-42v, 42, 51v-52"],
-          "type": "string",
-          "pattenrn": "\\d+(v?-\\d+v?)?(, \\d+(v?-\\d+v?)?)*"
-        },
-        "staff": {
-          "title": "Staff number annotation",
-          "description": "On which folio's staff the voice is written (counting from 1) OR the staff closest to preceeding part position. Note: empty staves also count.",
-          "example": [4],
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "staffAnnotation": {
-          "title": "Staff position comment",
-          "description": "If the part is located on a staff in such a way that providing an exact staff number is problematic, provide a comment.",
-          "examples": [
-            "An additional handwritten staff between 3rd and 4th staff on the print's page. [staff: 3]",
-            "An additional handwritten staff on the page margin. [staff: 3]"
-          ],
-          "type": "string"
+        "ambitus": {
+          "title": "Ambitus",
+          "description": "Lowest and highest note of the part.",
+          "properties": {
+            "lowest": {
+              "$ref": "PitchOctaveID"
+            },
+            "highest": {
+              "$ref": "PitchOctaveID"
+            }
+          }
         },
         "links": {
           "$ref": "#/definitions/Link",
           "title": "Links",
-          "description": "Links containings data related to the source.",
+          "description": "Links containing data related to this part.",
           "type": "array",
           "items": {
             "$comment": "TO DO: make this schema 'extend' Link schema such that it has compulsory type 'image', 'IFFF' or 'audio' (?) for linkType property.",
@@ -369,22 +405,31 @@
           }
         }
       },
-      "required": ["id", "document", "folio", "staff", "links"]
+      "required": ["location", "label", "clefInDocument", "ambitus", "links"],
+      "additionalProperties": false
     },
 
     "PartID": {
       "title": "Part name (standardised)",
       "description": "A typical name of this part.",
       "$comment": "TO DO: use some more formal convention.",
-      "enum": ["cantus", "altus", "tenor", "bassus"]
+      "enum": ["cantus", "altus", "tenor", "bassus", "quintus", "sextus", "vagans", "baricanor", "other"]
     },
 
     "PitchID": {
       "title": "Pitch ID",
-      "description": "A letter name of a pitch.",
+      "description": "A letter name of a written pitch.",
       "examples": ["A", "Bb", "F#"],
       "type": "string",
       "pattern": "[A-G](b*|#*)"
+    },
+
+    "PitchOctaveID": {
+      "title": "Pitch with octave ID",
+      "description": "A letter name of a written pitch with octave number. (Note: C4 = middle C).",
+      "examples": ["A4", "Bb2", "F#5"],
+      "type": "string",
+      "pattern": "[A-G](b*|#*)\\d*"
     },
 
     "ComposedOut": {
