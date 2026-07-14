@@ -417,7 +417,7 @@
           }
         }
       },
-      "required": ["location", "label", "clefInDocument", "ambitus", "links"],
+      "required": ["location", "label", "clefInDocument", "tonusInDocument", "ambitus", "links"],
       "additionalProperties": false
     },
 
